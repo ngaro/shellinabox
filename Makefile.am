@@ -43,7 +43,6 @@ EXTRA_DIST           = INSTALL.Debian                                         \
                        shellinabox/black-on-white.css                         \
                        shellinabox/monochrome.css                             \
                        shellinabox/color.css                                  \
-                       debian/README                                          \
                        debian/README.available                                \
                        debian/README.enabled                                  \
                        debian/changelog                                       \
