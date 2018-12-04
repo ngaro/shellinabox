@@ -71,6 +71,7 @@ static void debugMsg(int level, const char *fmt, va_list ap) {
   if (level <= verbosity) {
     vfprintf(stderr, fmt, ap);
     fputs("\n", stderr);
+    fflush(stderr);
   }
 }
 
