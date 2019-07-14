@@ -2643,7 +2643,7 @@ VT100.prototype.showContextMenu = function(x, y) {
   this.menu.style.top         = '0px';
   this.menu.style.width       =  this.container.offsetWidth  + 'px';
   this.menu.style.height      =  this.container.offsetHeight + 'px';
-  this.menu.style.display     = 'block'; 
+  this.menu.style.display     = 'block';
   popup.style.left            = '0px';
   popup.style.top             = '0px';
 
@@ -3007,14 +3007,14 @@ VT100.prototype.fixEvent = function(event) {
 };
 
 VT100.prototype.handleTouchStart = function(event) {
-    console.log("Touch Start");                                         
+    console.log("Touch Start");
     var text = this.getSelectedText();
     if (text) {
        console.log("Selected Text: " + text);
        return true;
     }
     var terminal = this;
-    this.xDown = event.touches[0].clientX;                                      
+    this.xDown = event.touches[0].clientX;
     this.yDown = event.touches[0].clientY;
     if (this.touchTimer) {
         clearTimeout(this.touchTimer);
@@ -3026,24 +3026,24 @@ VT100.prototype.handleTouchStart = function(event) {
         if (!text)
 	    terminal.showContextMenu(terminal.xDown,terminal.yDown);
     }, 750);
-    return false; 
-  };                                                
+    return false;
+  };
 VT100.prototype.handleTouchEnd = function(event) {
     console.log("Touch End");
-    if (this.touchTimer) { 
-	clearTimeout(this.touchTimer); 
-	this.touchTimer = null; 
+    if (this.touchTimer) {
+	clearTimeout(this.touchTimer);
+	this.touchTimer = null;
     }
     return false;
 }
 VT100.prototype.getSelectedText = function(event) {
-    var text = ""; 
-    if (typeof window.getSelection != "undefined") { 
-	text = window.getSelection().toString(); 
-    } else if (typeof document.selection != "undefined" && document.selection.type == "Text") { 
-	text = document.selection.createRange().text; 
-    } 
-    return text; 
+    var text = "";
+    if (typeof window.getSelection != "undefined") {
+	text = window.getSelection().toString();
+    } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
+	text = document.selection.createRange().text;
+    }
+    return text;
 }
 VT100.prototype.handleTouchMove = function(event) {
     console.log("Touch Move");
@@ -3056,11 +3056,11 @@ VT100.prototype.handleTouchMove = function(event) {
         return;
     }
 
-    var xUp = event.touches[0].clientX;                                    
+    var xUp = event.touches[0].clientX;
     var yUp = event.touches[0].clientY;
     var xDiff = this.xDown - xUp;
     var yDiff = this.yDown - yUp;
-    
+
     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
 	if (Math.abs( xDiff ) > this.Thresh) {
         	if ( xDiff > 0 ) {
@@ -3068,15 +3068,15 @@ VT100.prototype.handleTouchMove = function(event) {
        		} else {
             		this.keysPressed("\x02p");  // c^B P tmux prev
         	}
-	}                       
+	}
     } else {
 	if (Math.abs( yDiff ) > this.Thresh) {
         	if ( yDiff > 0 ) {
-            		this.keysPressed("\x1b[6~"); // Page Down 
-        	} else { 
+			this.keysPressed("\x1b[6~"); // Page Down
+		} else {
             		this.keysPressed("\x1b[5~"); // Page Up
         	}
-	}                                                                 
+	}
     }
     /* reset values */
     this.xDown = null;
@@ -3085,7 +3085,7 @@ VT100.prototype.handleTouchMove = function(event) {
       clearTimeout(this.touchTimer);
       this.touchTimer = null;
     }
-    return false;                                
+    return false;
   };
 
 VT100.prototype.keyDown = function(event) {
