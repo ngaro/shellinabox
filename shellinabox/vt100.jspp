@@ -3691,7 +3691,7 @@ VT100.prototype.openPrinterWindow = function() {
                            return false;
                          };
                        })(this, autoprint));
-      this.printWin.document.title = 'ShellInABox Printer Output';
+      this.printWin.document.title = 'OLE Printer Output';
     }
   } catch (e) {
     // Maybe, a popup blocker prevented us from working. Better catch the
@@ -4374,7 +4374,7 @@ VT100.prototype.doControl = function(ch) {
           if (this.titleString != '') {
             this.titleString += ' - ';
           }
-          this.titleString += 'Shell In A Box'
+          this.titleString += 'OLE'
         }
         try {
           window.document.title = this.titleString;
