@@ -647,7 +647,8 @@ static int sslSetCertificateFromFile(SSL_CTX *context,
 
 static void sslInfoCallback(const SSL *sslHndl, int type, int val) {
   // Count the number of renegotiations for each SSL session.
-  if (type & SSL_CB_HANDSHAKE_START) {
+  if(val == 0) error("[ssl] Can't get state info of SSL object.");
+  else if (type & SSL_CB_HANDSHAKE_START) {
     struct HttpConnection *http    =
                           (struct HttpConnection *) SSL_get_app_data(sslHndl);
     http->ssl->renegotiationCount += 1;
