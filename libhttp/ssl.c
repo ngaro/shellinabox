@@ -61,6 +61,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#include "shellinabox/privileges.h"
 #include "libhttp/ssl.h"
 #include "libhttp/httpconnection.h"
 #include "logging/logging.h"
