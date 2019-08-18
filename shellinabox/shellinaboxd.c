@@ -1446,7 +1446,7 @@ int main(int argc, char * const argv[]) {
     memset(&sa, 0, sizeof(sa));
     sa.sa_sigaction = sigHandler;
     sa.sa_flags   = SA_SIGINFO | SA_RESETHAND;
-    for (int i = 0; i < sizeof(signals)/sizeof(*signals); ++i) {
+    for (unsigned int i = 0; i < sizeof(signals)/sizeof(*signals); ++i) {
       sigaction(signals[i], &sa, NULL);
     }
     serverLoop(server);
