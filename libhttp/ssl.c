@@ -61,6 +61,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#include "shellinabox/privileges.h"
 #include "libhttp/ssl.h"
 #include "libhttp/httpconnection.h"
 #include "logging/logging.h"
@@ -557,6 +558,8 @@ static const unsigned char *sslPEMtoASN1(const unsigned char *pem,
 }
 
 static int sslSetCertificateFromFd(SSL_CTX *context, int fd) {
+  dropPrivileges();
+
   int rc                       = 0;
   check(serverSupportsSSL());
   check(fd >= 0);
@@ -780,6 +783,7 @@ static int sslSNICallback(SSL *sslHndl, int *al ATTR_UNUSED,
                                                   ssl->sniCertificatePattern,
                                                   serverName);
     if (sslSetCertificateFromFile(context, certificate) < 0) {
+#ifdef SELFSIGNEDCERT
       if (ssl->generateMissing) {
         sslGenerateCertificate(certificate, serverName + 1);
 
@@ -787,11 +791,14 @@ static int sslSNICallback(SSL *sslHndl, int *al ATTR_UNUSED,
         // the default certificate, instead.
         sslSetCertificateFromFile(context, certificate);
       } else {
+#endif
         warn("[ssl] Could not find matching certificate \"%s\" for \"%s\"",
              certificate, serverName + 1);
         SSL_CTX_free(context);
         context           = ssl->sslContext;
+#ifdef SELFSIGNEDCERT
       }
+#endif
     }
     ERR_clear_error();
     free(certificate);
@@ -853,6 +860,7 @@ void sslSetCertificate(struct SSLSupport *ssl, const char *filename,
 
   // Try to set the default certificate. If necessary, (re-)generate it.
   ssl->sslContext                    = sslMakeContext();
+#ifdef SELFSIGNEDCERT
   if (autoGenerateMissing) {
     if (sslSetCertificateFromFile(ssl->sslContext, defaultCertificate) < 0) {
       char hostname[256], buf[4096];
@@ -872,6 +880,7 @@ void sslSetCertificate(struct SSLSupport *ssl, const char *filename,
       goto valid_certificate;
     }
   }
+#endif
   if (sslSetCertificateFromFile(ssl->sslContext, defaultCertificate) < 0) {
     fatal("[ssl] Cannot read valid certificate from \"%s\"! "
           "Check file permissions and file format.", defaultCertificate);

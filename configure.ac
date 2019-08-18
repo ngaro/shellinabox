@@ -138,6 +138,16 @@ AC_ARG_ENABLE(runtime-loading,
                             these libraries into the binary, thus making them a
                             hard dependency, then disable runtime-loading.])
 
+dnl Necessary for self-signed certificates
+AC_ARG_ENABLE(selfsigned-cert,
+	      [  --enable-selfsigned-cert Support for self-signed ssl certificates will
+	                                  be enabled. ShellInABox will generate one if not
+					  available yet. Renegotiation will be allowed
+					  so that this works for modern browsers.])
+if test "x$enable_selfsigned_cert" == xyes; then
+  AC_DEFINE(SELFSIGNEDCERT, 1, Set if you want to allow the use and generation of self-signed certificates)
+fi
+
 dnl This changes the order of the top ciphersuites
 AC_ARG_ENABLE(prefer-chacha,
               [  --enable-prefer-chacha    Prefer ChaCha20-Poly1305 ciphersuites over

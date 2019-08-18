@@ -141,12 +141,14 @@ static ssize_t httpRead(struct HttpConnection *http, char *buf, ssize_t len) {
     }
     dcheck(!ERR_peek_error());
 
+#ifndef SELFSIGNEDCERT
     // Shutdown SSL connection, if client initiated renegotiation.
     if (http->ssl->renegotiationCount > 1) {
       debug("[ssl] Connection shutdown due to client initiated renegotiation!");
       rc                     = 0;
       errno                  = EINVAL;
     }
+#endif
   } else {
     rc = NOINTR(read(http->fd, buf, len));
   }
