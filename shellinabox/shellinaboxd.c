@@ -1357,6 +1357,7 @@ static void setUpSSL(Server *server) {
       serverSetCertificate(server, "certificate%s.pem", 1);
     }
   }
+  dropPrivileges();
 }
 
 int main(int argc, char * const argv[]) {
@@ -1382,14 +1383,12 @@ int main(int argc, char * const argv[]) {
   Server *server;
   if (port) {
     check(server  = newServer(localhostOnly, port));
-    dropPrivileges();
     setUpSSL(server);
   } else {
     // For CGI operation we fork the new server, so that it runs in the
     // background.
     pid_t pid;
     int   fds[2];
-    dropPrivileges();
     check(!pipe(fds));
     check((pid    = fork()) >= 0);
     if (pid) {
