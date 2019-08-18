@@ -1,5 +1,5 @@
 AM_CPPFLAGS          =
-AM_CFLAGS            = -g -std=gnu99 -Wall -pedantic -Wextra
+AM_CFLAGS            = -ggdb -O0 -std=gnu99 -Wall -pedantic -Wextra
 AM_LDFLAGS           = -g -lm
 ACLOCAL_AMFLAGS      = -I m4
 
