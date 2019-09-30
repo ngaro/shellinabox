@@ -469,16 +469,10 @@ ShellInABox.prototype.messageReplay = function(type, data) {
 ShellInABox.prototype.about = function() {
   alert("Shell In A Box " + VERSION +
         "\n\n" +
-        "Copyright 2008-2015 by Markus Gutschke. For more information visit\n" +
-        "http://shellinabox.com or http://github.com/shellinabox/." +
-        (typeof serverSupportsSSL != 'undefined' && serverSupportsSSL ?
-         "\n\n" +
-         "This product includes software developed by the OpenSSL Project for\n" +
-         "use in the OpenSSL Toolkit. (http://www.openssl.org/)" +
-         "\n\n" +
-         "This product includes cryptographic software written by Eric Young\n" +
-         "(eay@cryptsoft.com)" :
-         ""));
+        "Nikolas Garofil and others\n" +
+	"\n" +
+	"This is in dev-phase, expect bugs...\n"
+         );
 };
 
 /* vim: set filetype=javascript : */
